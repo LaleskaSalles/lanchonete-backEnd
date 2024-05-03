@@ -37,4 +37,13 @@ public class Drink {
         this.price = data.price();
         this.flag_sugar = data.flag_sugar();
     }
+
+    public void updateData(DrinkRequestDTO data) {
+        if (data.name() !=null || data.price() !=null || data.flag_sugar() !=null){
+            this.name = data.name();
+            this.description = data.description();
+            this.price = data.price();
+            this.flag_sugar = data.flag_sugar();
+        }
+    }
 }

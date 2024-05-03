@@ -23,8 +23,8 @@ create table hamburgers(
 
 create table hamburgers_ingredients(
     id int AUTO_INCREMENT primary key,
-    ingredients_id int,
-    hamburgers_id int,
+    ingredients_id int not null,
+    hamburgers_id int not null,
     foreign key (ingredients_id) references ingredients(id),
     foreign key (hamburgers_id) references hamburgers(id)
 );
