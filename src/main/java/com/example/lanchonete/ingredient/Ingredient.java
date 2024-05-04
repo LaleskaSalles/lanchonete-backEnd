@@ -1,6 +1,8 @@
 package com.example.lanchonete.ingredient;
 
 import com.example.lanchonete.hamburger.Hamburger;
+import com.example.lanchonete.order.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,7 +25,7 @@ public class Ingredient {
     @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(length = 100, nullable = true)
+    @Column(length = 100)
     private String description;
 
     @Column(nullable = false)
@@ -34,7 +36,12 @@ public class Ingredient {
     private FlagAdditional flag_additional;
 
     @ManyToMany(mappedBy = "ingredients")
+    @JsonIgnore
     List<Hamburger> ingredientsHamburgers;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "ingredients")
+    List<Order> ingredientsOrders;
 
     public Ingredient(IngredientRequestDTO data){
         this.name = data.name();
@@ -44,11 +51,18 @@ public class Ingredient {
     }
 
     public void updateData(IngredientRequestDTO data) {
-        if (data.name() != null  || data.price() != null || data.flag_additional() != null) {
+        if (data.name() != null  && data.price() != null && data.flag_additional() != null) {
             this.name = data.name();
             this.description = data.description();
             this.price = data.price();
             this.flag_additional = data.flag_additional();
+        }
+    }
+
+    @PrePersist
+    private void validatePrice(){
+        if (this.price <= 0){
+            throw new IllegalStateException("Price must be greater than 0");
         }
     }
 }

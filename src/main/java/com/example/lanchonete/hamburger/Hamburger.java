@@ -1,6 +1,8 @@
 package com.example.lanchonete.hamburger;
 
 import com.example.lanchonete.ingredient.Ingredient;
+import com.example.lanchonete.order.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -31,8 +33,13 @@ public class Hamburger {
     @JoinTable(
             name = "hamburgers_ingredients",
             joinColumns = @JoinColumn(name = "hamburgers_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredients_id"))
+            inverseJoinColumns = @JoinColumn(name = "ingredients_id")
+    )
     List<Ingredient> ingredients;
+
+    @ManyToMany
+    @JsonIgnore
+    List<Order> hamburgerOrders;
 
     public Hamburger(HamburgerRequestDTO data){
         this.name = data.name();
@@ -43,11 +50,18 @@ public class Hamburger {
 
 
     public void updateData(HamburgerRequestDTO data) {
-        if (data.name() != null || data.price() != null || data.ingredients() != null) {
+        if (data.name() != null && data.price() != null && data.ingredients() != null) {
             this.name = data.name();
             this.description = data.description();
             this.price = data.price();
             this.ingredients = data.ingredients();
+        }
+    }
+
+    @PrePersist
+    private void validatePrice(){
+        if (this.price <= 0){
+            throw new IllegalStateException("Price must be greater than 0");
         }
     }
 }
