@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("drink")
@@ -19,6 +20,7 @@ public class DrinkController {
     @Autowired
     private DrinkRepository repository;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity getAllDrinks() {
         try {
@@ -31,13 +33,32 @@ public class DrinkController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{id}")
+    public ResponseEntity getDrinkById(@PathVariable Long id) {
+        try {
+            Optional<Drink> drink = this.repository.findById(id);
+
+            if (drink.isPresent()) {
+                DrinkResponseDTO drinkResponseDTO = new DrinkResponseDTO(drink.get());
+                return ResponseEntity.status(HttpStatus.OK).body(drinkResponseDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Drink not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity postDrink(@RequestBody DrinkRequestDTO data) {
         try {
             Drink newDrink = new Drink(data);
 
             this.repository.save(newDrink);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Drink successfully registered!");
+            DrinkResponseDTO responseDTO = new DrinkResponseDTO(newDrink);
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -45,17 +66,18 @@ public class DrinkController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity putDrink(@PathVariable Long id, @RequestBody DrinkRequestDTO data) {
         try {
 
-            Drink drink = repository.findById(id)
+            Drink updateDrink = repository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Drink not found"));
 
-            drink.updateData(data);
-            repository.save(drink);
-
-            return ResponseEntity.status(HttpStatus.OK).body("Drink successfully updated!");
+            updateDrink.updateData(data);
+            repository.save(updateDrink);
+            DrinkResponseDTO responseDTO = new DrinkResponseDTO(updateDrink);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -63,14 +85,16 @@ public class DrinkController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteDrink(@PathVariable Long id) {
         try {
-            Drink drink = repository.findById(id)
+            Drink delelteDrink = repository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Drink not found"));
-            repository.delete(drink);
+            repository.delete(delelteDrink);
 
-            return ResponseEntity.status(HttpStatus.OK).body("Drink deleted!");
+            DrinkResponseDTO responseDTO = new DrinkResponseDTO(delelteDrink);
+            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {

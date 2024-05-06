@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("ingredient")
@@ -19,6 +20,7 @@ public class IngredientController {
     @Autowired
     private IngredientRepository repository;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity getAllIngredients() {
         try {
@@ -33,13 +35,32 @@ public class IngredientController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{id}")
+    public ResponseEntity getIngredientById(@PathVariable Long id) {
+        try {
+            Optional<Ingredient> ingredient = this.repository.findById(id);
+
+            if (ingredient.isPresent()) {
+                IngredientResponseDTO IngredientResponseDTO = new IngredientResponseDTO(ingredient.get());
+                return ResponseEntity.status(HttpStatus.OK).body(IngredientResponseDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ingredient not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity postIngredient(@RequestBody IngredientRequestDTO data) {
         try {
             Ingredient newIngredient = new Ingredient(data);
 
             this.repository.save(newIngredient);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Ingredient succesfully registered");
+            IngredientResponseDTO ingredientResponseDTO  = new IngredientResponseDTO(newIngredient);
+            return ResponseEntity.status(HttpStatus.CREATED).body(ingredientResponseDTO);
 
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -48,16 +69,17 @@ public class IngredientController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity putIngredient(@PathVariable Long id, @RequestBody IngredientRequestDTO data) {
         try {
-            Ingredient ingredient = repository.findById(id)
+            Ingredient updateIngredient = repository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
 
-            ingredient.updateData(data);
-            repository.save(ingredient);
-
-            return ResponseEntity.status(HttpStatus.OK).body("Ingredient successfully updated");
+            updateIngredient.updateData(data);
+            repository.save(updateIngredient);
+            IngredientResponseDTO ingredientResponseDTO  = new IngredientResponseDTO(updateIngredient);
+            return ResponseEntity.status(HttpStatus.OK).body(ingredientResponseDTO);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -65,14 +87,16 @@ public class IngredientController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteIngredient(@PathVariable Long id) {
         try {
-            Ingredient ingredient = repository.findById(id)
+            Ingredient deleteIngredient = repository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
 
-            repository.delete(ingredient);
-            return ResponseEntity.status(HttpStatus.OK).body("Ingredient deleted!");
+            repository.delete(deleteIngredient);
+            IngredientResponseDTO ingredientResponseDTO  = new IngredientResponseDTO(deleteIngredient);
+            return ResponseEntity.status(HttpStatus.OK).body(ingredientResponseDTO);
 
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

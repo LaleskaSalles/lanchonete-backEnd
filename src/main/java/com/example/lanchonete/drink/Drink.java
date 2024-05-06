@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Locale;
 
 @Table(name = "drinks")
 @Entity(name = "drinks")
@@ -40,16 +41,16 @@ public class Drink {
     List<Order> drinksOrders;
 
     public Drink(DrinkRequestDTO data){
-        this.name = data.name();
-        this.description = data.description();
+        this.name = data.name().toUpperCase();
+        this.description = data.description().toUpperCase();
         this.price = data.price();
         this.flag_sugar = data.flag_sugar();
     }
 
     public void updateData(DrinkRequestDTO data) {
         if (data.name() !=null && data.price() !=null && data.flag_sugar() !=null){
-            this.name = data.name();
-            this.description = data.description();
+            this.name = data.name().toUpperCase();
+            this.description = data.description().toUpperCase();
             this.price = data.price();
             this.flag_sugar = data.flag_sugar();
         }

@@ -5,7 +5,6 @@ import com.example.lanchonete.order.OrderRepository;
 import com.example.lanchonete.order.OrderRequestDTO;
 import com.example.lanchonete.order.OrderResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,7 @@ public class OrderController {
     @Autowired
     private OrderRepository repository;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity getAllOrders() {
         try {
@@ -35,13 +35,14 @@ public class OrderController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
     public ResponseEntity getOrderById(@PathVariable Long id) {
         try {
-            Optional<Order> optionalOrder = repository.findById(id);
+            Optional<Order> order = repository.findById(id);
 
-            if (optionalOrder.isPresent()) {
-                OrderResponseDTO orderResponseDTO = new OrderResponseDTO(optionalOrder.get());
+            if (order.isPresent()) {
+                OrderResponseDTO orderResponseDTO = new OrderResponseDTO(order.get());
                 return ResponseEntity.status(HttpStatus.OK).body(orderResponseDTO);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
@@ -51,13 +52,15 @@ public class OrderController {
         }
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity postOrder(@RequestBody OrderRequestDTO data) {
         try {
             Order newOrder = new Order(data);
 
             this.repository.save(newOrder);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Order succesfully registered");
+            OrderResponseDTO orderResponseDTO = new OrderResponseDTO(newOrder);
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseDTO);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {

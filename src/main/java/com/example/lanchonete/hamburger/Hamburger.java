@@ -37,13 +37,13 @@ public class Hamburger {
     )
     List<Ingredient> ingredients;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "hamburgers")
     @JsonIgnore
     List<Order> hamburgerOrders;
 
     public Hamburger(HamburgerRequestDTO data){
-        this.name = data.name();
-        this.description = data.description();
+        this.name = data.name().toUpperCase();
+        this.description = data.description().toUpperCase();
         this.price = data.price();
         this.ingredients = data.ingredients();
     }
@@ -51,8 +51,8 @@ public class Hamburger {
 
     public void updateData(HamburgerRequestDTO data) {
         if (data.name() != null && data.price() != null && data.ingredients() != null) {
-            this.name = data.name();
-            this.description = data.description();
+            this.name = data.name().toUpperCase();
+            this.description = data.description().toUpperCase();
             this.price = data.price();
             this.ingredients = data.ingredients();
         }

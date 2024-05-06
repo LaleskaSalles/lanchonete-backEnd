@@ -44,16 +44,16 @@ public class Ingredient {
     List<Order> ingredientsOrders;
 
     public Ingredient(IngredientRequestDTO data){
-        this.name = data.name();
-        this.description = data.description();
+        this.name = data.name().toUpperCase();
+        this.description = data.description().toUpperCase();
         this.price = data.price();
         this.flag_additional = data.flag_additional();
     }
 
     public void updateData(IngredientRequestDTO data) {
         if (data.name() != null  && data.price() != null && data.flag_additional() != null) {
-            this.name = data.name();
-            this.description = data.description();
+            this.name = data.name().toUpperCase();
+            this.description = data.description().toUpperCase();
             this.price = data.price();
             this.flag_additional = data.flag_additional();
         }
