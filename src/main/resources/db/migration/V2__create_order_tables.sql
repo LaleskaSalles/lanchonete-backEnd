@@ -10,7 +10,8 @@ create table orders(
     number integer,
     state char(2) not null,
     city varchar(100) not null,
-    total_price double not null
+    total_price double not null,
+    comments varchar(255)
 );
 
 create table order_ingredients(

@@ -58,6 +58,8 @@ public class Order {
 
     private Double total_price ;
 
+    private String comments;
+
     @ManyToMany
     @JoinTable(
             name = "order_drinks",
@@ -97,6 +99,7 @@ public class Order {
         this.hamburgers = data.hamburgers();
         this.ingredients = data.ingredients();
         this.total_price = calculateTotalPrice();
+        this.comments = data.comments();
     }
 
     @PrePersist

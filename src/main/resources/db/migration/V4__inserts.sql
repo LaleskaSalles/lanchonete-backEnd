@@ -1,0 +1,27 @@
+INSERT INTO drinks
+VALUES (1,'COCA-COLA ZERO','2 LTS',10,'WITHOUT_SUGAR'),(2,'COCA-COLA','2 LTS',10,'WITH_SUGAR'),(3,'SUCO DE LARANJA','1 LT',13,'WITH_SUGAR'),(4,'ÁGUA MINERAL','500 ML',3,'WITHOUT_SUGAR');
+
+INSERT INTO hamburgers
+VALUES (1,'CHEESE SALADA','CONTÉM CARNE, QUEIJO, ALFACE, TOMATE, CEBOLA!',35),(2,'X TUDO','BAGUETE, FRANGO, BACON, ETC',40),(3,'BURGER BURGER','LANCHE SIMPLES',40);
+
+INSERT INTO ingredients
+VALUES (1,'QUEIJO','',0.5,'ADDITIONAL'),(2,'PÃO','',0.3,'NOT_ADDITIONAL'),(3,'CARNE','',5,'ADDITIONAL'),(4,'ALFACE','',1,'ADDITIONAL'),(5,'TOMATE','',1,'ADDITIONAL'),(6,'CEBOLA','',1,'ADDITIONAL'),(7,'BACON','',2,'ADDITIONAL'),(8,'BATATA','',2,'ADDITIONAL'),(9,'FRANGO','',4,'ADDITIONAL'),(10,'MOLHO','',1,'NOT_ADDITIONAL');
+
+INSERT INTO orders
+VALUES (1,'2024-05-08 13:48:40','Beatriz Santiago','99999999998','Avenida Waldemar Alves','Jardim Brasil','16074000','Bloco 2 AP 9',968,'SP','Araçatuba',49);
+
+INSERT INTO hamburgers_ingredients
+VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,5,1),(6,6,1),(7,1,2),(8,2,2),(9,3,2),(10,4,2),(11,5,2),(12,6,2),(13,7,2),(14,8,2),(15,9,2),(16,10,2),(17,1,3),(18,2,3),(19,3,3),(20,4,3),(21,5,3),(22,6,3),(23,10,3);
+
+INSERT INTO order_drinks
+VALUES (1,1,3);
+
+INSERT INTO order_hamburgers
+VALUES (1,1,1);
+
+INSERT INTO order_ingredients
+VALUES (1,1,1),(2,1,1);
+
+INSERT INTO users
+VALUES (2,'teste@teste.com','$2a$10$aWjFYFQzJl9rAcba.SWYDuZhviN9BeOjBvAiyzR4LtLoxdmPih2Wu');
+

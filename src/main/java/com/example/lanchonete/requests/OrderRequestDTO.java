@@ -16,6 +16,7 @@ public record OrderRequestDTO(
         Integer number,
         String state,
         String city,
+        String comments,
         List<Drink> drinks,
         List<Hamburger> hamburgers,
         List<Ingredient> ingredients) {

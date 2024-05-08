@@ -20,6 +20,7 @@ public record OrderResponseDTO(
         String state,
         String city,
         Double total_price,
+        String comments,
         List<Drink> drinks,
         List<HamburgerResponseDTO> hamburgers,
         List<Ingredient> ingredients
@@ -38,6 +39,7 @@ public record OrderResponseDTO(
                 order.getState(),
                 order.getCity(),
                 order.getTotal_price(),
+                order.getComments(),
                 order.getDrinks(),
                 order.getHamburgers().stream().map(HamburgerResponseDTO::new).toList(),
                 order.getIngredients()

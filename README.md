@@ -27,6 +27,8 @@ Clone este repositório em sua máquina local.
 
 Configure o banco de dados MySQL e importe o esquema do banco de dados.
 
+* resources/db.migration irá criar as tabelas e popular com alguns dados
+
 Atualize as configurações de banco de dados no arquivo application.properties com as credenciais corretas.
 
 Compile e execute o projeto usando Maven ou sua IDE Java preferida.
@@ -36,3 +38,6 @@ Após executar o projeto, você pode acessar a interface da API através do seu
 navegador ou de uma ferramenta como Postman. A API oferece endpoints para criar novos pedidos, 
 adicionar produtos aos pedidos e calcular o preço total dos pedidos.
  
+## Front-end
+`https://github.com/LaleskaSalles/lanchonete-front`
+
