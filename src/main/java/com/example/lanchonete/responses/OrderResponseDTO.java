@@ -1,8 +1,8 @@
-package com.example.lanchonete.order;
+package com.example.lanchonete.responses;
 
-import com.example.lanchonete.drink.Drink;
-import com.example.lanchonete.hamburger.HamburgerResponseDTO;
-import com.example.lanchonete.ingredient.Ingredient;
+import com.example.lanchonete.domain.drink.Drink;
+import com.example.lanchonete.domain.ingredient.Ingredient;
+import com.example.lanchonete.domain.order.Order;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.lanchonete.ingredient;
+package com.example.lanchonete.domain.ingredient;
 
 public enum FlagAdditional {
     ADDITIONAL,

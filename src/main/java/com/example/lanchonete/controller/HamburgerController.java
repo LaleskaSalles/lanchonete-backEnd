@@ -1,11 +1,9 @@
 package com.example.lanchonete.controller;
 
-import com.example.lanchonete.drink.Drink;
-import com.example.lanchonete.drink.DrinkResponseDTO;
-import com.example.lanchonete.hamburger.Hamburger;
-import com.example.lanchonete.hamburger.HamburgerRepository;
-import com.example.lanchonete.hamburger.HamburgerRequestDTO;
-import com.example.lanchonete.hamburger.HamburgerResponseDTO;
+import com.example.lanchonete.domain.hamburger.Hamburger;
+import com.example.lanchonete.repositories.HamburgerRepository;
+import com.example.lanchonete.requests.HamburgerRequestDTO;
+import com.example.lanchonete.responses.HamburgerResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("hamburger")
+@RequestMapping("api/hamburger")
 public class HamburgerController {
 
     @Autowired

@@ -1,9 +1,9 @@
 package com.example.lanchonete.controller;
 
-import com.example.lanchonete.order.Order;
-import com.example.lanchonete.order.OrderRepository;
-import com.example.lanchonete.order.OrderRequestDTO;
-import com.example.lanchonete.order.OrderResponseDTO;
+import com.example.lanchonete.domain.order.Order;
+import com.example.lanchonete.repositories.OrderRepository;
+import com.example.lanchonete.requests.OrderRequestDTO;
+import com.example.lanchonete.responses.OrderResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("order")
+@RequestMapping("api/order")
 public class OrderController {
 
     @Autowired

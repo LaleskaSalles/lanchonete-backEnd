@@ -1,6 +1,6 @@
-package com.example.lanchonete.hamburger;
+package com.example.lanchonete.requests;
 
-import com.example.lanchonete.ingredient.Ingredient;
+import com.example.lanchonete.domain.ingredient.Ingredient;
 
 import java.util.List;
 

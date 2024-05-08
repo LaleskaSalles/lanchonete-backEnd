@@ -1,9 +1,9 @@
 package com.example.lanchonete.controller;
 
-import com.example.lanchonete.ingredient.Ingredient;
-import com.example.lanchonete.ingredient.IngredientRepository;
-import com.example.lanchonete.ingredient.IngredientRequestDTO;
-import com.example.lanchonete.ingredient.IngredientResponseDTO;
+import com.example.lanchonete.domain.ingredient.Ingredient;
+import com.example.lanchonete.repositories.IngredientRepository;
+import com.example.lanchonete.requests.IngredientRequestDTO;
+import com.example.lanchonete.responses.IngredientResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("ingredient")
+@RequestMapping("api/ingredient")
 public class IngredientController {
 
     @Autowired

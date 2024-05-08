@@ -1,7 +1,8 @@
-package com.example.lanchonete.ingredient;
+package com.example.lanchonete.domain.hamburger;
 
-import com.example.lanchonete.hamburger.Hamburger;
-import com.example.lanchonete.order.Order;
+import com.example.lanchonete.domain.ingredient.Ingredient;
+import com.example.lanchonete.domain.order.Order;
+import com.example.lanchonete.requests.HamburgerRequestDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,51 +12,50 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Table(name = "ingredients")
-@Entity(name = "ingredients")
+@Table(name = "hamburgers")
+@Entity(name = "hamburgers")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Ingredient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Hamburger {
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(length = 100)
     private String description;
 
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private FlagAdditional flag_additional;
+    @ManyToMany
+    @JoinTable(
+            name = "hamburgers_ingredients",
+            joinColumns = @JoinColumn(name = "hamburgers_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredients_id")
+    )
+    List<Ingredient> ingredients;
 
-    @ManyToMany(mappedBy = "ingredients")
+    @ManyToMany(mappedBy = "hamburgers")
     @JsonIgnore
-    List<Hamburger> ingredientsHamburgers;
+    List<Order> hamburgerOrders;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "ingredients")
-    List<Order> ingredientsOrders;
-
-    public Ingredient(IngredientRequestDTO data){
+    public Hamburger(HamburgerRequestDTO data){
         this.name = data.name().toUpperCase();
         this.description = data.description().toUpperCase();
         this.price = data.price();
-        this.flag_additional = data.flag_additional();
+        this.ingredients = data.ingredients();
     }
 
-    public void updateData(IngredientRequestDTO data) {
-        if (data.name() != null  && data.price() != null && data.flag_additional() != null) {
+
+    public void updateData(HamburgerRequestDTO data) {
+        if (data.name() != null && data.price() != null && data.ingredients() != null) {
             this.name = data.name().toUpperCase();
             this.description = data.description().toUpperCase();
             this.price = data.price();
-            this.flag_additional = data.flag_additional();
+            this.ingredients = data.ingredients();
         }
     }
 

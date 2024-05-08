@@ -1,6 +1,8 @@
-package com.example.lanchonete.drink;
+package com.example.lanchonete.domain.ingredient;
 
-import com.example.lanchonete.order.Order;
+import com.example.lanchonete.domain.hamburger.Hamburger;
+import com.example.lanchonete.domain.order.Order;
+import com.example.lanchonete.requests.IngredientRequestDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,16 +11,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Locale;
 
-@Table(name = "drinks")
-@Entity(name = "drinks")
+@Table(name = "ingredients")
+@Entity(name = "ingredients")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Drink {
-
+public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,25 +34,29 @@ public class Drink {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private FlagSugar flag_sugar;
+    private FlagAdditional flag_additional;
 
-    @ManyToMany(mappedBy = "drinks")
+    @ManyToMany(mappedBy = "ingredients")
     @JsonIgnore
-    List<Order> drinksOrders;
+    List<Hamburger> ingredientsHamburgers;
 
-    public Drink(DrinkRequestDTO data){
+    @JsonIgnore
+    @ManyToMany(mappedBy = "ingredients")
+    List<Order> ingredientsOrders;
+
+    public Ingredient(IngredientRequestDTO data){
         this.name = data.name().toUpperCase();
         this.description = data.description().toUpperCase();
         this.price = data.price();
-        this.flag_sugar = data.flag_sugar();
+        this.flag_additional = data.flag_additional();
     }
 
-    public void updateData(DrinkRequestDTO data) {
-        if (data.name() !=null && data.price() !=null && data.flag_sugar() !=null){
+    public void updateData(IngredientRequestDTO data) {
+        if (data.name() != null  && data.price() != null && data.flag_additional() != null) {
             this.name = data.name().toUpperCase();
             this.description = data.description().toUpperCase();
             this.price = data.price();
-            this.flag_sugar = data.flag_sugar();
+            this.flag_additional = data.flag_additional();
         }
     }
 

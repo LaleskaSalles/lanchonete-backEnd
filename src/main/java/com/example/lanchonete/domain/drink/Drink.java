@@ -1,7 +1,7 @@
-package com.example.lanchonete.hamburger;
+package com.example.lanchonete.domain.drink;
 
-import com.example.lanchonete.ingredient.Ingredient;
-import com.example.lanchonete.order.Order;
+import com.example.lanchonete.domain.order.Order;
+import com.example.lanchonete.requests.DrinkRequestDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,50 +11,48 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Table(name = "hamburgers")
-@Entity(name = "hamburgers")
+@Table(name = "drinks")
+@Entity(name = "drinks")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Hamburger {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Drink {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 30, nullable = false)
     private String name;
 
+    @Column(length = 100)
     private String description;
 
     @Column(nullable = false)
     private Double price;
 
-    @ManyToMany
-    @JoinTable(
-            name = "hamburgers_ingredients",
-            joinColumns = @JoinColumn(name = "hamburgers_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredients_id")
-    )
-    List<Ingredient> ingredients;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private FlagSugar flag_sugar;
 
-    @ManyToMany(mappedBy = "hamburgers")
+    @ManyToMany(mappedBy = "drinks")
     @JsonIgnore
-    List<Order> hamburgerOrders;
+    List<Order> drinksOrders;
 
-    public Hamburger(HamburgerRequestDTO data){
+    public Drink(DrinkRequestDTO data){
         this.name = data.name().toUpperCase();
         this.description = data.description().toUpperCase();
         this.price = data.price();
-        this.ingredients = data.ingredients();
+        this.flag_sugar = data.flag_sugar();
     }
 
-
-    public void updateData(HamburgerRequestDTO data) {
-        if (data.name() != null && data.price() != null && data.ingredients() != null) {
+    public void updateData(DrinkRequestDTO data) {
+        if (data.name() !=null && data.price() !=null && data.flag_sugar() !=null){
             this.name = data.name().toUpperCase();
             this.description = data.description().toUpperCase();
             this.price = data.price();
-            this.ingredients = data.ingredients();
+            this.flag_sugar = data.flag_sugar();
         }
     }
 

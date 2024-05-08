@@ -1,9 +1,12 @@
 package com.example.lanchonete.controller;
 
-import com.example.lanchonete.drink.Drink;
-import com.example.lanchonete.drink.DrinkRepository;
-import com.example.lanchonete.drink.DrinkRequestDTO;
-import com.example.lanchonete.drink.DrinkResponseDTO;
+import com.example.lanchonete.domain.drink.Drink;
+import com.example.lanchonete.domain.ingredient.Ingredient;
+import com.example.lanchonete.repositories.DrinkRepository;
+import com.example.lanchonete.requests.DrinkRequestDTO;
+import com.example.lanchonete.requests.IngredientRequestDTO;
+import com.example.lanchonete.responses.DrinkResponseDTO;
+import com.example.lanchonete.responses.IngredientResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("drink")
+@RequestMapping("api/drink")
 public class DrinkController {
 
     @Autowired
@@ -57,8 +60,9 @@ public class DrinkController {
             Drink newDrink = new Drink(data);
 
             this.repository.save(newDrink);
-            DrinkResponseDTO responseDTO = new DrinkResponseDTO(newDrink);
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+            DrinkResponseDTO drinkResponseDTO  = new DrinkResponseDTO(newDrink);
+            return ResponseEntity.status(HttpStatus.CREATED).body(drinkResponseDTO);
+
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
