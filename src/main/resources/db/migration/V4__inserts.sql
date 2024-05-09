@@ -9,10 +9,11 @@ VALUES (2,'teste@teste.com','$2a$10$aWjFYFQzJl9rAcba.SWYDuZhviN9BeOjBvAiyzR4LtLo
 
 INSERT INTO hamburgers VALUES (1,'CHEESE SALADA','LANCHE QUE VAI QUEIJO, CARNE, ALFACE, TOMATE, CEBOLA',32),(2,'BURGER BACON','LANCHE COM MUITO BACON',40),(3,'BURGER SIMPLES','LANCHE SIMPLES',31);
 
+INSERT INTO orders VALUES (1,'2024-05-08 22:48:22','Guilherme Santiago','99999999998','Avenida Waldemar Alves','Jardim Brasil','16074000','',3256,'SP','Araçatuba',92,''),(2,'2024-05-08 22:50:39','Julia Monteiro','18000000000','Rua Aguapeí','Jardim do Prado','16025455','',8787,'SP','Araçatuba',53,'Tenho alergia a cebola e quero a carne ao ponto');
+
 INSERT INTO hamburgers_ingredients VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,5,1),(6,6,1),(7,1,2),(8,2,2),(9,3,2),(10,7,2),(11,10,2),(12,1,3),(13,2,3),(14,3,3),(15,10,3);
 
 INSERT INTO order_drinks VALUES (1,1,1),(2,1,1),(3,2,3);
 
 INSERT INTO order_hamburgers VALUES (1,1,1),(2,1,2),(3,2,2);
 
-INSERT INTO orders VALUES (1,'2024-05-08 22:48:22','Guilherme Santiago','99999999998','Avenida Waldemar Alves','Jardim Brasil','16074000','',3256,'SP','Araçatuba',92,''),(2,'2024-05-08 22:50:39','Julia Monteiro','18000000000','Rua Aguapeí','Jardim do Prado','16025455','',8787,'SP','Araçatuba',53,'Tenho alergia a cebola e quero a carne ao ponto');
